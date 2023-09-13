@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SubtarefaController;
+use App\Http\Controllers\TarefaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +23,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
-Route::post('teste', [AuthController::class, 'teste']);
+
+Route::group(['middleware' => ['jwt.auth']], function () {
+    // Teste -->
+    Route::post('teste', [AuthController::class, 'teste']);
+    // Tarefas -->
+    Route::post('tarefa', [TarefaController::class, 'create']);
+    Route::post('tarefa/{id}', [TarefaController::class, 'update']);
+    Route::post('tarefa/{id}', [TarefaController::class, 'destroy']);
+    // Subtarefas -->
+    Route::post('subtarefa', [SubtarefaController::class, 'create']);
+    Route::post('subtarefa/{id}', [SubtarefaController::class, 'update']);
+    Route::post('subtarefa/{id}', [SubtarefaController::class, 'destroy']);
+});
