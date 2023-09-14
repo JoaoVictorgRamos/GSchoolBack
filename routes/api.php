@@ -25,6 +25,8 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
 Route::group(['middleware' => ['jwt.auth']], function () {
+    // Me -->
+    Route::get('me', [AuthController::class, 'me']);
     // Teste -->
     Route::post('teste', [AuthController::class, 'teste']);
     // Tarefas -->
